@@ -55,7 +55,7 @@ namespace FinalProject
             // sizes table
             DataTable sizes = new DataTable("Sizes");
             sizes.Columns.Add("SizeID", typeof(int)).AutoIncrement = true;
-            sizes.Columns.Add("Description", typeof(string));
+            sizes.Columns.Add("Name", typeof(string));
             sizes.PrimaryKey = new DataColumn[] { sizes.Columns["SizeID"] };
             dataSet.Tables.Add(sizes);
 
@@ -79,7 +79,7 @@ namespace FinalProject
             // crusts table
             DataTable crusts = new DataTable("Crusts");
             crusts.Columns.Add("CrustID", typeof(int)).AutoIncrement = true;
-            crusts.Columns.Add("Type", typeof(string));
+            crusts.Columns.Add("Name", typeof(string));
             crusts.PrimaryKey = new DataColumn[] { crusts.Columns["CrustID"] };
             dataSet.Tables.Add(crusts);
 
@@ -109,7 +109,7 @@ namespace FinalProject
         private void AddCrust(DataTable table, string type)
         {
             DataRow row = table.NewRow();
-            row["Type"] = type;
+            row["Name"] = type;
             table.Rows.Add(row);
         }
 
@@ -123,7 +123,7 @@ namespace FinalProject
         private void AddSize(DataTable table, string description)
         {
             DataRow row = table.NewRow();
-            row["Description"] = description;
+            row["Name"] = description;
             table.Rows.Add(row);
         }
 
@@ -156,23 +156,9 @@ namespace FinalProject
             }
             else
             {
-                clientName.InnerText = "client not found";
+                clientName.InnerText = "Client not found";
                 deliveryAddress.InnerText = "";
             }
-        }
-        
-        protected void SaveEntity_Click(object sender, EventArgs e)
-        {
-
-        }
-        protected void CancelEntity_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void CreateOrder_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void SaveOrder_Click(object sender, EventArgs e)
@@ -182,77 +168,21 @@ namespace FinalProject
 
         protected void EntityType_Changed(object sender, EventArgs e)
         {
-            // Get the selected value from the dropdown
-            string selectedValue = entityTypeDropdown.SelectedValue;
+            // clear listbox
+            lstInfo.Items.Clear();
 
-            // Check which table to bind based on the selected value
-            switch (selectedValue)
+
+            // get info from dropdown
+            string selectedEntityType = entityTypeDropdown.SelectedValue;
+
+            // get table depending of dropdown
+            DataTable selectedTable = dbNapolitana.Tables[selectedEntityType];
+
+            // add info to listbox
+            foreach (DataRow row in selectedTable.Rows)
             {
-                case "pizzas":
-                    entityGrid.DataSource = dbNapolitana.Tables["Pizzas"];
-                    ((BoundField)entityGrid.Columns[1]).DataField = "Name";
-                    break;
-                case "sizes":
-                    entityGrid.DataSource = dbNapolitana.Tables["Sizes"];
-                    ((BoundField)entityGrid.Columns[1]).DataField = "Description";
-                    break;
-                case "ingredients":
-                    entityGrid.DataSource = dbNapolitana.Tables["Ingredients"];
-                    ((BoundField)entityGrid.Columns[1]).DataField = "Name";
-                    break;
-                case "crusts":
-                    entityGrid.DataSource = dbNapolitana.Tables["Crusts"];
-                    ((BoundField)entityGrid.Columns[1]).DataField = "Type";
-                    break;
-                case "clients":
-                    entityGrid.DataSource = dbNapolitana.Tables["Clients"];
-                    ((BoundField)entityGrid.Columns[1]).DataField = "Name";
-                    break;
-                default:
-                    break;
+                lstInfo.Items.Add(row["Name"].ToString());
             }
-
-            // Bind the selected table to the GridView
-            entityGrid.DataBind();
         }
-
-
-
-        protected void entityGrid_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            // Set the row for editing
-            entityGrid.EditIndex = e.NewEditIndex;
-
-            // Rebind the GridView to show the editing row
-            EntityType_Changed(entityTypeDropdown, EventArgs.Empty);
-        }
-
-        protected void entityGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            // Get the new values from the GridView row
-            GridViewRow row = entityGrid.Rows[e.RowIndex];
-            int id = Convert.ToInt32(((TextBox)(row.Cells[1].Controls[0])).Text);
-            string newName = ((TextBox)(row.Cells[2].Controls[0])).Text;
-
-            // Find the entity in the appropriate table and update its details
-            DataRow entityRow = dbNapolitana.Tables[entityTypeDropdown.SelectedValue].Rows.Find(id);
-            entityRow["Name"] = newName;
-
-            // Exit editing mode
-            entityGrid.EditIndex = -1;
-
-            // Rebind the GridView to show the updated row
-            EntityType_Changed(entityTypeDropdown, EventArgs.Empty);
-        }
-
-        protected void entityGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            // Exit editing mode
-            entityGrid.EditIndex = -1;
-
-            // Rebind the GridView
-            EntityType_Changed(entityTypeDropdown, EventArgs.Empty);
-        }
-
     }
 }

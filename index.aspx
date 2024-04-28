@@ -26,10 +26,8 @@
                 </tr>
             </table>
 
-            <h2>Manage Entities</h2>
-            <p>Select Entity:</p>
-            <h2>Manage Entities</h2>
-            <p>Select Entity:</p>
+            <h2>Manage Database</h2>
+            <p>Select Table:</p>
             <asp:DropDownList ID="entityTypeDropdown" runat="server" OnSelectedIndexChanged="EntityType_Changed" AutoPostBack="true">
                 <asp:ListItem Value="pizzas">Pizzas</asp:ListItem>
                 <asp:ListItem Value="sizes">Sizes</asp:ListItem>
@@ -40,22 +38,11 @@
             <br />
             <br />
             <div id="entityForm" runat="server">
-                <asp:GridView ID="entityGrid" runat="server" AutoGenerateColumns="False" OnRowEditing="entityGrid_RowEditing" OnRowUpdating="entityGrid_RowUpdating" OnRowCancelingEdit="entityGrid_RowCancelingEdit">
-                    <Columns>
-                        <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
-                        <asp:BoundField DataField="Name" HeaderText="Name" />
-                        <asp:CommandField ShowEditButton="True" />
-                    </Columns>
-                </asp:GridView>
-
+                <asp:ListBox ID="lstInfo" runat="server"></asp:ListBox>
                 <br />
-                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="SaveEntity_Click" />
-                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="CancelEntity_Click" />
             </div>
 
             <h2>Create Order</h2>
-            <asp:Button ID="btnCreate" runat="server" Text="Create Order" OnClick="CreateOrder_Click" />
-            <br />
             <br />
             <table id="orderTable" runat="server">
                 <tr>
