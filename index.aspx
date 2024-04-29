@@ -54,7 +54,7 @@
             <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
             <asp:Button ID="btnAdd" runat="server" Text="Add" />
             <asp:Button ID="btnUpdate" runat="server" Text="Update" />
-            <asp:Button ID="btnDelete" runat="server" Text="Delete" />
+            <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
             <br />
 
             <h2>Create Order</h2>
@@ -62,23 +62,33 @@
             <table id="orderTable" runat="server">
                 <tr>
                     <th>Client:</th>
-                    <td id="orderClient" runat="server"></td>
+                    <td id="orderClient" runat="server">
+                        <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                    </td>
+                    
                 </tr>
                 <tr>
                     <th>Pizza:</th>
-                    <td id="orderPizza" runat="server"></td>
+                    <td id="orderPizza" runat="server">
+                        <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                    </td>
                 </tr>
                 <tr>
                     <th>Size:</th>
-                    <td id="orderSize" runat="server"></td>
+                    <td id="orderSize" runat="server">
+                        <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                    </td>
                 </tr>
                 <tr>
                     <th>Crust:</th>
-                    <td id="orderCrust" runat="server"></td>
+                    <td id="orderCrust" runat="server">
+                        <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+                    </td>
                 </tr>
                 <tr>
                     <th>Ingredients:</th>
-                    <td id="orderIngredients" runat="server"></td>
+                    <td id="orderIngredients" runat="server">
+                        <asp:DropDownList ID="DropDownList5" runat="server"></asp:DropDownList></td>
                 </tr>
             </table>
             <asp:Button ID="btnSaveOrder" runat="server" Text="Save Order" OnClick="SaveOrder_Click" />

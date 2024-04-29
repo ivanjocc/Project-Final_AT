@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Security.Policy;
@@ -178,6 +179,8 @@ namespace FinalProject
                 ListItem newItem = new ListItem(row["Name"].ToString());
                 lstInfo.Items.Add(newItem);
             }
+
+            LoadItemsForSelectedTable();
         }
 
 
@@ -189,5 +192,38 @@ namespace FinalProject
             }
         }
 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            string selectedTable = entityTypeDropdown.SelectedValue;
+            DataTable table = dbNapolitana.Tables[selectedTable];
+
+            if (lstInfo.SelectedItem != null)
+            {
+                int itemId = Convert.ToInt32(lstInfo.SelectedValue);
+
+                DataRow rowToDelete = table.Rows.Find(itemId);
+
+                if (rowToDelete != null)
+                {
+                    table.Rows.Remove(rowToDelete);
+
+                    LoadItemsForSelectedTable();
+                }
+            }
+        }
+
+        private void LoadItemsForSelectedTable()
+        {
+            string selectedTable = entityTypeDropdown.SelectedValue;
+            DataTable table = dbNapolitana.Tables[selectedTable];
+
+            lstInfo.Items.Clear();
+
+            foreach (DataRow row in table.Rows)
+            {
+                ListItem listItem = new ListItem(row["Name"].ToString(), row[table.PrimaryKey[0].ColumnName].ToString());
+                lstInfo.Items.Add(listItem);
+            }
+        }
     }
 }
