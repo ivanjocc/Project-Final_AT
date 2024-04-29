@@ -22,7 +22,27 @@ namespace FinalProject
             if (!IsPostBack)
             {
                 dbNapolitana = CreateNapolitanaDataSet();
+                LoadDropDownLists();
             }
+        }
+
+        private void LoadDropDownLists()
+        {
+            LoadDropDownList(DropDownList1, dbNapolitana.Tables["Clients"], "ClientID", "Name");
+            LoadDropDownList(DropDownList2, dbNapolitana.Tables["Pizzas"], "PizzaID", "Name");
+            LoadDropDownList(DropDownList3, dbNapolitana.Tables["Sizes"], "SizeID", "Name");
+            LoadDropDownList(DropDownList4, dbNapolitana.Tables["Crusts"], "CrustID", "Name");
+            LoadDropDownList(DropDownList5, dbNapolitana.Tables["Ingredients"], "IngredientID", "Name");
+        }
+
+        private void LoadDropDownList(DropDownList ddl, DataTable table, string dataValueField, string dataTextField)
+        {
+            ddl.DataSource = table;
+            ddl.DataValueField = dataValueField;
+            ddl.DataTextField = dataTextField;
+            ddl.DataBind();
+
+            ddl.Items.Insert(0, new ListItem("-- Select --", "0"));
         }
 
         private DataSet CreateNapolitanaDataSet()
@@ -164,8 +184,18 @@ namespace FinalProject
 
         protected void SaveOrder_Click(object sender, EventArgs e)
         {
+            DataTable ordersTable = dbNapolitana.Tables["Orders"];
 
+            DataRow newOrderRow = ordersTable.NewRow();
+
+            newOrderRow["ClientID"] = Convert.ToInt32(DropDownList1.SelectedValue);
+            newOrderRow["PizzaID"] = Convert.ToInt32(DropDownList2.SelectedValue);
+            newOrderRow["SizeID"] = Convert.ToInt32(DropDownList3.SelectedValue);
+            newOrderRow["CrustID"] = Convert.ToInt32(DropDownList4.SelectedValue);
+
+            ordersTable.Rows.Add(newOrderRow);
         }
+
 
         protected void EntityType_Changed(object sender, EventArgs e)
         {
