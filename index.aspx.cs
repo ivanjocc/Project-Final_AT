@@ -248,5 +248,25 @@ namespace FinalProject
 
             txtName.Text = "";
         }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string selectedTable = entityTypeDropdown.SelectedValue;
+            DataTable table = dbNapolitana.Tables[selectedTable];
+
+            if (lstInfo.SelectedItem != null)
+            {
+                int itemId = Convert.ToInt32(lstInfo.SelectedValue);
+
+                DataRow rowToUpdate = table.Rows.Find(itemId);
+
+                if (rowToUpdate != null && !string.IsNullOrWhiteSpace(txtName.Text))
+                {
+                    rowToUpdate["Name"] = txtName.Text;
+
+                    LoadItemsForSelectedTable();
+                }
+            }
+        }
     }
 }
