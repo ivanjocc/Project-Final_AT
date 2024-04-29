@@ -225,5 +225,28 @@ namespace FinalProject
                 lstInfo.Items.Add(listItem);
             }
         }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            string selectedTable = entityTypeDropdown.SelectedValue;
+            DataTable table = dbNapolitana.Tables[selectedTable];
+
+            DataRow newRow = table.NewRow();
+
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                newRow["Name"] = "Nuevo ítem";
+            }
+            else
+            {
+                newRow["Name"] = txtName.Text;
+            }
+
+            table.Rows.Add(newRow);
+
+            LoadItemsForSelectedTable();
+
+            txtName.Text = "";
+        }
     }
 }

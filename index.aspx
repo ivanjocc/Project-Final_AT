@@ -52,7 +52,7 @@
             <br />
             <asp:Label ID="lblName" runat="server" Text="Name"></asp:Label>
             <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
-            <asp:Button ID="btnAdd" runat="server" Text="Add" />
+            <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
             <asp:Button ID="btnUpdate" runat="server" Text="Update" />
             <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
             <br />
