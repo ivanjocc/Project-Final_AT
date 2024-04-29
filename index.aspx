@@ -4,7 +4,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Pizzeria del meneo</title>
+    <style type="text/css">
+        body {
+            cursor: url('/cursor/cursor.cur'), auto;
+        }
+
+        body:active {
+            cursor: url('/cursor/active.cur'), auto;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -36,11 +45,17 @@
                 <asp:ListItem Value="clients">Clients</asp:ListItem>
             </asp:DropDownList>
             <br />
-            <br />
             <div id="entityForm" runat="server">
-                <asp:ListBox ID="lstInfo" runat="server"></asp:ListBox>
+                <asp:ListBox ID="lstInfo" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstInfo_SelectedIndexChanged"></asp:ListBox>
                 <br />
             </div>
+            <br />
+            <asp:Label ID="lblName" runat="server" Text="Name"></asp:Label>
+            <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+            <asp:Button ID="btnAdd" runat="server" Text="Add" />
+            <asp:Button ID="btnUpdate" runat="server" Text="Update" />
+            <asp:Button ID="btnDelete" runat="server" Text="Delete" />
+            <br />
 
             <h2>Create Order</h2>
             <br />

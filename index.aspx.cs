@@ -168,21 +168,26 @@ namespace FinalProject
 
         protected void EntityType_Changed(object sender, EventArgs e)
         {
-            // clear listbox
             lstInfo.Items.Clear();
 
-
-            // get info from dropdown
             string selectedEntityType = entityTypeDropdown.SelectedValue;
-
-            // get table depending of dropdown
             DataTable selectedTable = dbNapolitana.Tables[selectedEntityType];
 
-            // add info to listbox
             foreach (DataRow row in selectedTable.Rows)
             {
-                lstInfo.Items.Add(row["Name"].ToString());
+                ListItem newItem = new ListItem(row["Name"].ToString());
+                lstInfo.Items.Add(newItem);
             }
         }
+
+
+        protected void lstInfo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstInfo.SelectedIndex != -1)
+            {
+                txtName.Text = lstInfo.SelectedItem.Text;
+            }
+        }
+
     }
 }
